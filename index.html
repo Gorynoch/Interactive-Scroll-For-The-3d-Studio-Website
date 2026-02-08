@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rainstyle Games — Services</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #272f38;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .header {
+      position: fixed;
+      top: 26px;
+      left: 34px;
+      z-index: 50;
+      font-family: 'Archivo Black', sans-serif;
+      letter-spacing: 2px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 90px;
+      padding: 160px 72px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .left {
+      position: sticky;
+      top: 120px;
+      height: calc(100vh - 180px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 50px;
+    }
+
+    .blob-wrap {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      transition: transform 0.4s ease;
+      will-change: transform;
+    }
+
+    .blob {
+      position: absolute;
+      inset: 0;
+      border-radius: 52% 48% 60% 40% / 58% 42% 55% 45%;
+      background: radial-gradient(circle at 30% 30%, #f88236, #14181f 75%);
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      transition: all .9s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .blob-content {
+      z-index: 2;
+      max-width: 90%;
+      text-align: center;
+      transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .blob-content.fade-out {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .blob-content.fade-in {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+
+    .blob-content h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 24px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .blob-glow {
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(circle, rgba(248,130,54,0.35), transparent 70%);
+      filter: blur(65px);
+      opacity: 0.9;
+      transition: background .8s cubic-bezier(.2,.8,.2,1);
+      pointer-events: none;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 120px;
+      padding-bottom: 140px;
+    }
+
+    .game {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 26px;
+      padding: 55px 55px;
+      opacity: 0.45;
+      transition: opacity .5s ease, transform .5s ease, box-shadow .5s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .game.active {
+      opacity: 1;
+      transform: translateY(-6px);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+    }
+
+    .game-desc {
+      font-size: 22px;
+      line-height: 1.55;
+      opacity: 0.92;
+      margin-bottom: 55px;
+      max-width: 95%;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .game-item {
+      padding: 38px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .game-item:nth-child(odd) {
+      padding-right: 40px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .game-item:nth-child(even) {
+      padding-left: 40px;
+    }
+
+    .game-item h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 38px;
+      line-height: 0.95;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .game-item span {
+      font-size: 13px;
+      opacity: 0.6;
+      padding-top: 8px;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .game-item.empty {
+      border-bottom: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 70px;
+        padding: 120px 24px;
+      }
+
+      .left {
+        position: relative;
+        top: 0;
+        height: auto;
+        padding-top: 0;
+        margin-bottom: 30px;
+      }
+
+      .right {
+        gap: 80px;
+      }
+
+      .game {
+        padding: 35px 28px;
+      }
+
+      .game-item h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <span>RAINSTYLE GAMES</span>
+</header>
+
+<main class="layout">
+
+  <div class="left">
+    <div class="blob-wrap" id="blobWrap">
+      <div class="blob" id="blob">
+        <div class="blob-content fade-in" id="blobContent">
+          <h3 id="blobTitle">DISRUPTIVE MARKETING</h3>
+        </div>
+      </div>
+      <div class="blob-glow" id="glow"></div>
+    </div>
+  </div>
+
+  <div class="right">
+
+    <section class="game active"
+      data-color="#f88236"
+      data-shape="soft"
+      data-title="DISRUPTIVE MARKETING">
+      <p class="game-desc">
+        Our team devises and executes cost-effective campaigns to create player awareness through various channels,
+        enabling you to focus on game development.
+      </p>
+
+      <div class="game-grid">
+        <div class="game-item">
+          <h2>MARKETING PLAN PREPARATION<br>& EXECUTION</h2>
+          <span>01</span>
+        </div>
+
+        <div class="game-item">
+          <h2>TRAILER<br>PRODUCTION</h2>
+          <span>02</span>
+        </div>
+
+        <div class="game-item">
+          <h2>PR<br>DISTRIBUTION</h2>
+          <span>03</span>
+        </div>
+
+        <div class="game-item">
+          <h2>CROSS-<br>PROMOTION</h2>
+          <span>04</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="game"
+      data-color="#fd6e45"
+      data-shape="sharp"
+      data-title="STRATEGIC PUBLISHING">
+      <p class="game-desc">
+        Secure initial funding and maximize game revenue with our comprehensive life-cycle planning,
+        platform relations management, and custom discounts campaigns.
+      </p>
+
+      <div class="game-grid">
+        <div class="game-item">
+          <h2>PLATFORM<br>RELATIONS</h2>
+          <span>01</span>
+        </div>
+
+        <div class="game-item">
+          <h2>LOCALIZATION</h2>
+          <span>02</span>
+        </div>
+
+        <div class="game-item">
+          <h2>PORTING<br>ASSISTANCE</h2>
+          <span>03</span>
+        </div>
+
+        <div class="game-item">
+          <h2>STOREFRONT<br>MANAGEMENT</h2>
+          <span>04</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="game"
+      data-color="#ff674c"
+      data-shape="fluid"
+      data-title="PRODUCTION SUPPORT">
+      <p class="game-desc">
+        Our in-house QA team works alongside developers to ensure flawless gameplay, while our producers collaborate
+        with trusted partners to deliver additional high-quality content like music or cinematics.
+      </p>
+
+      <div class="game-grid">
+        <div class="game-item">
+          <h2>BUGS & GAME DESIGN<br>FEEDBACK</h2>
+          <span>01</span>
+        </div>
+
+        <div class="game-item">
+          <h2>SOUNDTRACK<br>ASSISTANCE</h2>
+          <span>02</span>
+        </div>
+
+        <div class="game-item">
+          <h2>ARTIST<br>ASSISTANCE</h2>
+          <span>03</span>
+        </div>
+
+        <div class="game-item empty">
+          <h2></h2>
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="game"
+      data-color="#fcc02d"
+      data-shape="soft"
+      data-title="CROWDFUNDING">
+      <p class="game-desc">
+        We provide project evaluation, media production, PR support, and a 100% success rate for campaigns we've worked on.
+        We'll help you raise the funds you need to get your game off the ground.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const games = document.querySelectorAll(".game");
+    const blobWrap = document.getElementById("blobWrap");
+    const blob = document.getElementById("blob");
+    const glow = document.getElementById("glow");
+    const blobContent = document.getElementById("blobContent");
+    const blobTitle = document.getElementById("blobTitle");
+
+    let active = 0;
+    let lock = false;
+
+    function setActive(i) {
+      games.forEach((g, idx) => g.classList.toggle("active", idx === i));
+
+      const color = games[i].dataset.color;
+      const shape = games[i].dataset.shape;
+      const title = games[i].dataset.title;
+
+     blob.style.background = `radial-gradient(circle at 30% 30%, ${color}, #14181f 75%)`;
+glow.style.background = `radial-gradient(circle, ${color}55, transparent 70%)`;
+
+      if (!lock) {
+        lock = true;
+
+        blobContent.classList.remove("fade-in");
+        blobContent.classList.add("fade-out");
+
+        setTimeout(() => {
+          blobTitle.textContent = title;
+
+          blobContent.classList.remove("fade-out");
+          blobContent.classList.add("fade-in");
+
+          lock = false;
+        }, 260);
+      }
+
+      if (shape === "sharp") {
+        blob.style.borderRadius = "40% 60% 50% 50% / 45% 55% 60% 40%";
+      }
+
+      if (shape === "fluid") {
+        blob.style.borderRadius = "55% 45% 65% 35% / 60% 40% 50% 50%";
+      }
+
+      if (shape === "soft") {
+        blob.style.borderRadius = "52% 48% 60% 40% / 58% 42% 55% 45%";
+      }
+    }
+
+    function onScroll() {
+      let closest = 0;
+      let min = Infinity;
+
+      games.forEach((section, i) => {
+        const rect = section.getBoundingClientRect();
+        const dist = Math.abs(rect.top - window.innerHeight * 0.42);
+
+        if (dist < min) {
+          min = dist;
+          closest = i;
+        }
+      });
+
+      if (closest !== active) {
+        active = closest;
+        setActive(active);
+      }
+
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const maxMove = 140;
+      const moveY = Math.min(scrollTop * 0.06, maxMove);
+
+      blobWrap.style.transform = `translateY(${moveY}px)`;
+    }
+
+    setActive(0);
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+
+  });
+</script>
+
+</body>
+</html>
