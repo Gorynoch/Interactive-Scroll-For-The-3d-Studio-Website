@@ -10,7 +10,6 @@
 
 <body>
 <div class="rg-services">
-
   <header class="rg-header">
     <span>RAINSTYLE GAMES</span>
   </header>
@@ -23,6 +22,7 @@
             <h3 id="rgBlobTitle">DISRUPTIVE MARKETING</h3>
           </div>
         </div>
+
         <div class="rg-blob-glow" id="rgGlow"></div>
       </div>
     </div>
@@ -32,7 +32,6 @@
         data-color="#f88236"
         data-shape="soft"
         data-title="DISRUPTIVE MARKETING">
-
         <p class="rg-game-desc">
           Our team devises and executes cost-effective campaigns to create player awareness through various channels,
           enabling you to focus on game development.
@@ -65,7 +64,6 @@
         data-color="#fd6e45"
         data-shape="sharp"
         data-title="STRATEGIC PUBLISHING">
-
         <p class="rg-game-desc">
           Secure initial funding and maximize game revenue with our comprehensive life-cycle planning,
           platform relations management, and custom discounts campaigns.
@@ -98,7 +96,6 @@
         data-color="#ff674c"
         data-shape="fluid"
         data-title="PRODUCTION SUPPORT">
-
         <p class="rg-game-desc">
           Our in-house QA team works alongside developers to ensure flawless gameplay, while our producers collaborate
           with trusted partners to deliver additional high-quality content like music or cinematics.
@@ -131,121 +128,16 @@
         data-color="#fcc02d"
         data-shape="soft"
         data-title="CROWDFUNDING">
-
         <p class="rg-game-desc">
           We provide project evaluation, media production, PR support, and a 100% success rate for campaigns we've worked on.
           We'll help you raise the funds you need to get your game off the ground.
         </p>
       </section>
-
     </div>
   </div>
-
 </div>
-<script>
-(function () {
-  function initRainStyle() {
-    const container = document.querySelector(".rg-services");
-    if (!container) return false;
+<script src="script.js" defer></script>
 
-    const games = container.querySelectorAll(".rg-game");
-    const blobWrap = container.querySelector("#rgBlobWrap");
-    const blob = container.querySelector("#rgBlob");
-    const glow = container.querySelector("#rgGlow");
-    const blobContent = container.querySelector("#rgBlobContent");
-    const blobTitle = container.querySelector("#rgBlobTitle");
-
-    if (!(games.length && blobWrap && blob && glow && blobContent && blobTitle)) {
-      console.log("RainStyle: elements not ready");
-      return false;
-    }
-
-    console.log("RainStyle INIT OK");
-
-    let active = 0;
-    let lock = false;
-
-    function setActive(i) {
-      games.forEach((g, idx) => g.classList.toggle("rg-active", idx === i));
-
-      const color = games[i].dataset.color;
-      const shape = games[i].dataset.shape;
-      const title = games[i].dataset.title;
-
-      blob.style.background = `radial-gradient(circle at 30% 30%, ${color}, #14181f 75%)`;
-      glow.style.background = `radial-gradient(circle, ${color}55, transparent 70%)`;
-
-      if (!lock) {
-        lock = true;
-        blobContent.classList.remove("rg-fade-in");
-        blobContent.classList.add("rg-fade-out");
-
-        setTimeout(() => {
-          blobTitle.textContent = title;
-          blobContent.classList.remove("rg-fade-out");
-          blobContent.classList.add("rg-fade-in");
-          lock = false;
-        }, 260);
-      }
-
-      if (shape === "sharp") {
-        blob.style.borderRadius = "40% 60% 50% 50% / 45% 55% 60% 40%";
-      } else if (shape === "fluid") {
-        blob.style.borderRadius = "55% 45% 65% 35% / 60% 40% 50% 50%";
-      } else {
-        blob.style.borderRadius = "52% 48% 60% 40% / 58% 42% 55% 45%";
-      }
-    }
-
-    function onScroll() {
-      let closest = 0;
-      let min = Infinity;
-
-      games.forEach((section, i) => {
-        const rect = section.getBoundingClientRect();
-        const dist = Math.abs(rect.top - window.innerHeight * 0.42);
-
-        if (dist < min) {
-          min = dist;
-          closest = i;
-        }
-      });
-
-      if (closest !== active) {
-        active = closest;
-        setActive(active);
-      }
-
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const maxMove = 140;
-      const moveY = Math.min(scrollTop * 0.06, maxMove);
-
-      blobWrap.style.top = moveY + "px";
-    }
-
-    setActive(0);
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    return true;
-  }
-
-  let tries = 0;
-  const timer = setInterval(() => {
-    tries++;
-
-    if (initRainStyle()) {
-      clearInterval(timer);
-    }
-
-    if (tries > 50) {
-      clearInterval(timer);
-      console.log("RainStyle: init failed (block not found)");
-    }
-  }, 200);
-})();
-</script>
 
 </body>
 </html>
