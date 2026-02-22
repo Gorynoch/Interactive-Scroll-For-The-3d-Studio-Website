@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Rainstyle Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:#1e2730;
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;
+  color:#ffffff;
+}
+
+.rs-services,
+.rs-services *{
+  color:#ffffff;
+}
+
+
+.rs-services{
+  position:relative;
+  height:400vh;
+}
+
+.rs-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.rs-game{
+  position:absolute;
+  width:88%;
+  max-width:1000px;
+  padding:70px 90px;
+  border-radius:28px;
+
+  background:linear-gradient(180deg,#0f2534 0%,#0c1f2d 100%);
+  border:1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 0 60px rgba(255,255,255,0.15),
+    0 0 120px rgba(255,255,255,0.10),
+    0 0 200px rgba(255,255,255,0.06),
+    inset 0 0 40px rgba(255,255,255,0.05);
+
+  opacity:0;
+  transform:translateY(180px) scale(.96);
+  transition:
+    opacity .8s cubic-bezier(.22,.61,.36,1),
+    transform 1s cubic-bezier(.22,.61,.36,1),
+    filter .8s ease;
+}
+
+.rs-game.rs-active{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  z-index:3;
+  filter:brightness(1);
+}
+
+.rs-game.rs-prev{
+  opacity:.12;
+  transform:translateY(-260px) scale(.9);
+  z-index:2;
+  filter:brightness(.5) blur(2px);
+}
+
+
+.rs-game-title{
+  font-family:'Oswald';
+  font-size:44px;
+  letter-spacing:2px;
+  margin-bottom:35px;
+  text-align:center;
+}
+
+
+.rs-game-desc{
+  font-size:18px;
+  line-height:1.7;
+  margin:0 auto 70px auto;
+  max-width:750px;
+  text-align:center;
+}
+
+
+.rs-game-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px 120px;
+  counter-reset:item;
+  max-width:800px;
+  margin:0 auto;
+}
+
+.rs-game-item{
+  position:relative;
+  padding-left:48px;
+  transform:translateY(30px);
+  opacity:0;
+  transition:
+    transform .8s cubic-bezier(.22,.61,.36,1),
+    opacity .8s ease;
+  counter-increment:item;
+}
+
+.rs-game-item::before{
+  content: counter(item, decimal-leading-zero);
+  position:absolute;
+  left:0;
+  top:0;
+  font-family:'Oswald';
+  font-size:18px;
+  letter-spacing:1px;
+  opacity:.6;
+}
+
+.rs-game-item h2{
+  font-family:'Oswald';
+  font-size:19px;
+  letter-spacing:1px;
+  margin:0;
+  line-height:1.5;
+}
+
+.rs-game.rs-active .rs-game-item{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.rs-game.rs-active .rs-game-item:nth-child(1){ transition-delay:.15s; }
+.rs-game.rs-active .rs-game-item:nth-child(2){ transition-delay:.25s; }
+.rs-game.rs-active .rs-game-item:nth-child(3){ transition-delay:.35s; }
+.rs-game.rs-active .rs-game-item:nth-child(4){ transition-delay:.45s; }
+
+
+.rs-submit-btn{
+  display:inline-block;
+  margin-top:60px;
+  font-family:'Oswald';
+  font-size:20px;
+  letter-spacing:1px;
+  text-decoration:underline;
+  color:#ffffff;
+  transition:
+    transform .3s ease,
+    opacity .3s ease;
+}
+
+.rs-submit-btn:hover{
+  transform:scale(1.1);
+  opacity:1;
+}
+
+.rs-game:last-child{
+  text-align:center;
+}
+
+
+.after{
+  height:120vh;
+  background:#1e2730;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  color:#ffffff;
+}
+</style>
+</head>
+<body>
+
+<div class="rs-services">
+  <div class="rs-sticky">
+
+    <section class="rs-game rs-active">
+      <div class="rs-game-title">DISRUPTIVE MARKETING</div>
+      <p class="rs-game-desc">
+        Our team devises and executes cost-effective campaigns to create player awareness through various channels, enabling you to focus on game development.
+      </p>
+      <div class="rs-game-grid">
+        <div class="rs-game-item"><h2>MARKETING PLAN PREPARATION & EXECUTION</h2></div>
+        <div class="rs-game-item"><h2>PR DISTRIBUTION</h2></div>
+        <div class="rs-game-item"><h2>TRAILER PRODUCTION</h2></div>
+        <div class="rs-game-item"><h2>CROSS-PROMOTION</h2></div>
+      </div>
+    </section>
+
+    <section class="rs-game">
+      <div class="rs-game-title">STRATEGIC PUBLISHING</div>
+      <p class="rs-game-desc">
+        Secure initial funding and maximize game revenue with our comprehensive life-cycle planning, platform relations management, and custom discounts campaigns.
+      </p>
+      <div class="rs-game-grid">
+        <div class="rs-game-item"><h2>PLATFORM RELATIONS</h2></div>
+        <div class="rs-game-item"><h2>PORTING ASSISTANCE</h2></div>
+        <div class="rs-game-item"><h2>LOCALIZATION</h2></div>
+        <div class="rs-game-item"><h2>STOREFRONT MANAGEMENT</h2></div>
+      </div>
+    </section>
+
+    <section class="rs-game">
+      <div class="rs-game-title">COMPREHENSIVE SUPPORT</div>
+      <p class="rs-game-desc">
+        Our in-house QA team works alongside developers to ensure flawless gameplay, while our producers collaborate with trusted partners to deliver additional high-quality content like music or cinematics.
+      </p>
+      <div class="rs-game-grid">
+        <div class="rs-game-item"><h2>BUGS & GAME DESIGN FEEDBACK</h2></div>
+        <div class="rs-game-item"><h2>ARTIST ASSISTANCE</h2></div>
+        <div class="rs-game-item"><h2>SOUNDTRACK ASSISTANCE</h2></div>
+      </div>
+    </section>
+
+    <section class="rs-game">
+      <div class="rs-game-title">CROWDFUNDING</div>
+      <p class="rs-game-desc">
+        We provide project evaluation, media production, PR support, and a 100% success rate for campaigns we've worked on. We'll help you raise the funds you need to get your game off the ground.
+      </p>
+      <a href="#" class="rs-submit-btn">SUBMIT YOUR GAME</a>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+const container = document.querySelector(".rs-services");
+const games = Array.from(document.querySelectorAll(".rs-game"));
+let current = 0;
+let target = 0;
+
+function update(){
+  const rect = container.getBoundingClientRect();
+  const raw = -rect.top / (rect.height - window.innerHeight);
+  const progress = Math.max(0, Math.min(raw, 1));
+  target = progress * (games.length - 1);
+  current += (target - current) * 0.08;
+  const index = Math.round(current);
+
+  games.forEach((g,i)=>{
+    g.classList.remove("rs-active","rs-prev");
+    if(i === index) g.classList.add("rs-active");
+    if(i === index-1) g.classList.add("rs-prev");
+  });
+
+  requestAnimationFrame(update);
+}
+update();
+})();
+</script>
+
+</body>
+</html>
